@@ -30,6 +30,7 @@ class MainViewModel : ViewModel() {
     fun fetchCoinInfo(){
         viewModelScope.launch {
             coinListLiveData.value = upbitService.getAllCoinList()
+
         }
     }
 
