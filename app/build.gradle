@@ -58,4 +58,7 @@ dependencies {
 
     //SearchAbleSpinner
     implementation 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1'
+
+    //build.grdle
+    implementation 'com.google.android.gms:play-services-ads:19.7.0'
 }

@@ -14,7 +14,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 class MainViewModel : ViewModel() {
 
     val coinListLiveData = MutableLiveData<List<CoinList>>()
-    val coinPriceLiveData = MutableLiveData<List<CoinInfo>>()
+    var coinPriceLiveData = MutableLiveData<List<CoinInfo>>()
 
     private val upbitService : UpbitService
 
@@ -36,8 +36,7 @@ class MainViewModel : ViewModel() {
 
     fun fetchCoinPrice(coinName: String){
         viewModelScope.launch {
-                coinPriceLiveData.value = upbitService.getCoinInfo(coinName)
-
+            coinPriceLiveData.value = upbitService.getCoinInfo(coinName)
         }
     }
 

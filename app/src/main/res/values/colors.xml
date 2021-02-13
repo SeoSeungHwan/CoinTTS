@@ -10,4 +10,5 @@
 
     <color name="mainColor">#093687</color>
     <color name="yellow">#ffdc00</color>
+    <color name="layoutColor">#FFFFFF</color>
 </resources>
