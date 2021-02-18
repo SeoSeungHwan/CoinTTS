@@ -1,5 +1,6 @@
 package com.router.cointts
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.speech.tts.TextToSpeech
@@ -10,6 +11,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
+
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.android.gms.ads.AdRequest
@@ -24,9 +26,10 @@ import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity() {
 
+
     private val viewModel: MainViewModel by viewModels()
-    private var coinListArray = ArrayList<String>()
-    private var coinKoreanNameArray = ArrayList<String>()
+    private var coinListArray = java.util.ArrayList<String>()
+    private var coinKoreanNameArray = java.util.ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,21 +74,6 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        //TTS Init
-        var tts: TextToSpeech? = null
-        fun ttsInit() {
-            tts = TextToSpeech(this@MainActivity) {
-                if (it == TextToSpeech.SUCCESS) {
-                    val result = tts?.setLanguage(Locale.KOREA)
-                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Toast.makeText(this@MainActivity, "언어를 지원하지 않습니다.", Toast.LENGTH_SHORT)
-                            .show()
-                        return@TextToSpeech
-                    }
-                } else {
-                }
-            }
-        }
 
         //handler를 사용하여 코인의 가격을 읽어오고 읽어온가격을 TTS로 변환
 
@@ -124,11 +112,12 @@ class MainActivity : AppCompatActivity() {
             ttsInit()
             handler.post(handlerTask)
             Toast.makeText(this,coinList_spinner.selectedItem.toString()+"알림을"+repeatTime/1000+"초마다 반복합니다.",Toast.LENGTH_SHORT).show()
+            startService(Intent(applicationContext,MyService::class.java))
         }
         pause_btn.setOnClickListener {
             handler.removeCallbacks(handlerTask)
-
             Toast.makeText(this,"알림을 종료합니다.",Toast.LENGTH_SHORT).show()
+            stopService(Intent(applicationContext,MyService::class.java))
         }
 
     }
