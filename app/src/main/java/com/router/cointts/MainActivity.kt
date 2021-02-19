@@ -1,8 +1,12 @@
 package com.router.cointts
 
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.Handler
+import android.os.IBinder
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
@@ -26,10 +30,27 @@ import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity() {
 
-
+    //Viewmodel과 코인목록 ArrayList
     private val viewModel: MainViewModel by viewModels()
     private var coinListArray = java.util.ArrayList<String>()
     private var coinKoreanNameArray = java.util.ArrayList<String>()
+
+    //Service 를 담을 객체와 연결확인하는 변수
+    private lateinit var myService : MyService
+    private var isBound = false
+
+    private val connection = object : ServiceConnection {
+
+        override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
+            val binder = p1 as MyService.MyLocalBinder
+            myService = binder.getService()
+            isBound = true
+        }
+
+        override fun onServiceDisconnected(p0: ComponentName?) {
+            isBound = false
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,49 +96,28 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        //handler를 사용하여 코인의 가격을 읽어오고 읽어온가격을 TTS로 변환
 
-        var coinPrice: String? = null
-        val decimalFormat = DecimalFormat("#.##")
-        fun getCoinPrice() {
-            viewModel.apply {
-                fetchCoinPrice(coinListArray.get(coinList_spinner.selectedItemPosition))
-                coinPriceLiveData.observe(this@MainActivity, Observer {
-                    coinPrice = decimalFormat.format(it.get(0).trade_price.toDouble())+"원"
-
-                })
-            }
-        }
-
-
-
-        val handler = Handler()
-        var repeatTime = (sec_spinner.selectedItem.toString().toInt()* 1000).toLong()
-        val handlerTask = object : Runnable {
-            override fun run() {
-                repeatTime = (sec_spinner.selectedItem.toString().toInt()* 1000).toLong()
-                getCoinPrice()
-                tts?.speak(
-                    coinPrice,
-                    TextToSpeech.QUEUE_FLUSH,
-                    null,
-                    null
-                )
-                price_tv.text = coinPrice
-                handler.postDelayed(this, repeatTime)
-            }
-        }
-
+        //시작버튼을 누르면 서비스 실행(코인이름과 반복시간 bind로 전달)
         start_btn.setOnClickListener {
-            ttsInit()
-            handler.post(handlerTask)
-            Toast.makeText(this,coinList_spinner.selectedItem.toString()+"알림을"+repeatTime/1000+"초마다 반복합니다.",Toast.LENGTH_SHORT).show()
-            startService(Intent(applicationContext,MyService::class.java))
+            var intent = Intent(this,MyService::class.java)
+            intent.putExtra("coinName",coinList_spinner.selectedItemPosition)
+            intent.putExtra("repeatTime",sec_spinner.selectedItem.toString())
+            intent.putExtra("coinListArray" , coinListArray)
+            bindService(intent,connection, Context.BIND_AUTO_CREATE)
+
+            Toast.makeText(this,coinKoreanNameArray.get(coinList_spinner.selectedItemPosition)+
+                    "알림을"+
+                    sec_spinner.selectedItem.toString()+
+                    "초뒤에 시작합니다.",
+                Toast.LENGTH_SHORT).show()
         }
+
+        //일시정지버튼을 누르면 서비스 종료
         pause_btn.setOnClickListener {
-            handler.removeCallbacks(handlerTask)
+
             Toast.makeText(this,"알림을 종료합니다.",Toast.LENGTH_SHORT).show()
-            stopService(Intent(applicationContext,MyService::class.java))
+            unbindService(connection)
+            isBound=false
         }
 
     }
