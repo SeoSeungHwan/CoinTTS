@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CoinTTS</string>
+    <string name="app_name">BitcoinSpeaker</string>
     <string name="admob_app_id">ca-app-pub-5086679279657695~9504897265</string>
     <string name="banner_ad_unit_id">ca-app-pub-5086679279657695/3794966081</string>
     <string name="banner_ad_unit_id_for_test">ca-app-pub-3940256099942544/6300978111</string>

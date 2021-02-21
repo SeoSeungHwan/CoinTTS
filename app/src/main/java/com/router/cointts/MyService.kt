@@ -64,6 +64,8 @@ class MyService : LifecycleService() {
         Log.d(TAG, "onBind: ")
         handler.post(handlerTask as Runnable)
 
+
+
         return myBinder
     }
 

@@ -41,6 +41,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginStart="40dp"
@@ -56,9 +57,9 @@
             android:id="@+id/textview2"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:fontFamily="@font/hanygo230"
             android:gravity="center"
             android:text="반복 시간\n(초)"
-            android:fontFamily="@font/hanygo230"
             android:textColor="#000000"
             android:textSize="20sp" />
 
@@ -74,14 +75,14 @@
         android:id="@+id/price_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="150dp"
-        android:text="현재 가격"
-        android:textColor="#ffffff"
-        android:textSize="30sp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/hanygo230"
-        app:layout_constraintBottom_toTopOf="@+id/adView"
+        android:text="인터넷이 연결되어있어야 정상 사용가능합니다"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />>
 
 
     <Button
