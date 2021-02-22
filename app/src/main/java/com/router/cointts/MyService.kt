@@ -8,8 +8,8 @@ import android.os.Handler
 import android.os.IBinder
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import java.util.*
 import androidx.lifecycle.LifecycleService
+import java.util.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Runnable
 import java.text.DecimalFormat
