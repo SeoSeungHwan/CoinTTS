@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
+
+
         //반복 시간 Spinner관련
         val items = resources.getStringArray(R.array.sec_array)
         val sec_spinner_adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -97,7 +99,12 @@ class MainActivity : AppCompatActivity() {
         pause_btn.setOnClickListener {
 
             Toast.makeText(this,"알림을 종료합니다.",Toast.LENGTH_SHORT).show()
-            unbindService(connection)
+            try{
+                unbindService(connection)
+            }catch (e:Exception){
+
+            }
+
             isBound=false
         }
 
