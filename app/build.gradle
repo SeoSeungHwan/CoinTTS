@@ -12,8 +12,8 @@ android {
         applicationId "com.router.cointts"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 5
-        versionName "1.13"
+        versionCode 6
+        versionName "1.14"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

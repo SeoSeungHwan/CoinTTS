@@ -67,28 +67,32 @@ class MyService : LifecycleService() {
                 )
 
                 //notification알람으로 상단알림으로 가격 전달
-               createNotificationChannel(this, NotificationManagerCompat.IMPORTANCE_DEFAULT,
-                    false, getString(R.string.app_name), "App notification channel") // 1
 
-                val channelId = "coinTTS"
-                val title = coinListArray.get(coinName)
-                val content = coinPrice+"원"
 
-                val intent = Intent(baseContext, MyService::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                val pendingIntent = PendingIntent.getActivity(baseContext, 0,
-                    intent, PendingIntent.FLAG_UPDATE_CURRENT)    // 3
+                if(GlobalApplication.isNotificationCheck){
+                    createNotificationChannel(this, NotificationManagerCompat.IMPORTANCE_DEFAULT,
+                        false, getString(R.string.app_name), "App notification channel") // 1
 
-                val builder = NotificationCompat.Builder(this@MyService, channelId)  // 4
-                builder.setSmallIcon(R.drawable.icon)    // 5
-                builder.setContentTitle(title)    // 6
-                builder.setContentText(content)    // 7
-                builder.priority = NotificationCompat.PRIORITY_DEFAULT    // 8
-                builder.setAutoCancel(true)   // 9
-                builder.setContentIntent(pendingIntent)   // 10
+                    val channelId = "coinTTS"
+                    val title = coinListArray.get(coinName)
+                    val content = coinPrice+"원"
 
-                val notificationManager = NotificationManagerCompat.from(this@MyService)
-                notificationManager.notify(1001, builder.build())
+                    val intent = Intent(baseContext, MyService::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    val pendingIntent = PendingIntent.getActivity(baseContext, 0,
+                        intent, PendingIntent.FLAG_UPDATE_CURRENT)    // 3
+
+                    val builder = NotificationCompat.Builder(this@MyService, channelId)  // 4
+                    builder.setSmallIcon(R.drawable.icon)    // 5
+                    builder.setContentTitle(title)    // 6
+                    builder.setContentText(content)    // 7
+                    builder.priority = NotificationCompat.PRIORITY_DEFAULT    // 8
+                    builder.setAutoCancel(true)   // 9
+                    builder.setContentIntent(pendingIntent)   // 10
+
+                    val notificationManager = NotificationManagerCompat.from(this@MyService)
+                    notificationManager.notify(1001, builder.build())
+                }
                 handler.postDelayed(this, repeatTime)
             }
         }
@@ -145,6 +149,7 @@ class MyService : LifecycleService() {
             val notificationManager: NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
+
         }
     }
 

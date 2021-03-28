@@ -113,5 +113,18 @@
         app:layout_constraintLeft_toRightOf="@+id/start_btn"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <CheckBox
+        android:id="@+id/isnotification_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:buttonTint="@color/yellow"
+        android:fontFamily="@font/hanygo230"
+        android:text="상단알림 허용(무음모드를 추천합니다)"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/start_btn"
+        app:layout_constraintStart_toStartOf="@+id/start_btn" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

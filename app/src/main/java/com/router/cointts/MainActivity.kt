@@ -108,6 +108,16 @@ class MainActivity : AppCompatActivity() {
             isBound=false
         }
 
+        isnotification_cb.setOnCheckedChangeListener { compoundButton, b ->
+            if(b){
+                GlobalApplication.isNotificationCheck=true
+            }else{
+                GlobalApplication.isNotificationCheck=false
+            }
+        }
+
+
+
     }
 }
 
