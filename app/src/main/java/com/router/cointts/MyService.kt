@@ -16,6 +16,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.LifecycleService
+import androidx.lifecycle.observe
 import java.util.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Runnable

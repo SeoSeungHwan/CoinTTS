@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
+//TODO BindService 를 ForegroundService로 변경하기
 class MainActivity : AppCompatActivity() {
 
     //Viewmodel과 코인목록 ArrayList
